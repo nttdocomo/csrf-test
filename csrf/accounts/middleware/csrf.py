@@ -17,6 +17,7 @@ REASON_NO_CSRF_COOKIE = "CSRF cookie not set."
 REASON_BAD_TOKEN = "CSRF token missing or incorrect."
 
 def _get_failure_view():
+    print 'asdasdasddas'
     """
     Returns the view to be used for CSRF rejections
     """
