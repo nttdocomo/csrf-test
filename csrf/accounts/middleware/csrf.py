@@ -7,6 +7,7 @@ from __future__ import unicode_literals
 
 import logging
 import re
+import os
 
 from django.conf import settings
 from django.core.urlresolvers import get_callable
@@ -108,6 +109,7 @@ class CsrfViewMiddleware(object):
             print "request is_secure"
             print request.is_secure()
             print settings.SECURE_PROXY_SSL_HEADER
+            print os.environ.get("HTTPS")
             if request.is_secure():
                 print "request.is_secure()"
                 # Suppose user visits http://example.com/
