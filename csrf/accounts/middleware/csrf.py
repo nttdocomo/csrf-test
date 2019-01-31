@@ -97,6 +97,7 @@ class CsrfViewMiddleware(object):
         if request.method not in ('GET', 'HEAD', 'OPTIONS', 'TRACE'):
             print "request.method not in ('GET', 'HEAD', 'OPTIONS', 'TRACE')"
             if getattr(request, '_dont_enforce_csrf_checks', False):
+                print "getattr(request, '_dont_enforce_csrf_checks', False)"
                 # Mechanism to turn off CSRF checks for test suite.
                 # It comes after the creation of CSRF cookies, so that
                 # everything else continues to work exactly the same
