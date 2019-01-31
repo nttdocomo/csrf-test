@@ -8,6 +8,11 @@ from __future__ import unicode_literals
 from django.conf import settings
 from django.utils.cache import patch_vary_headers
 
+REASON_NO_REFERER = "Referer checking failed - no Referer."
+REASON_BAD_REFERER = "Referer checking failed - %s does not match %s."
+REASON_NO_CSRF_COOKIE = "CSRF cookie not set."
+REASON_BAD_TOKEN = "CSRF token missing or incorrect."
+
 class CsrfViewMiddleware(object):
     """
     Middleware that requires a present and correct csrfmiddlewaretoken
