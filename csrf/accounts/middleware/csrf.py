@@ -107,6 +107,7 @@ class CsrfViewMiddleware(object):
             
             print "request is_secure"
             print request.is_secure()
+            print settings.SECURE_PROXY_SSL_HEADER
             if request.is_secure():
                 print "request.is_secure()"
                 # Suppose user visits http://example.com/
