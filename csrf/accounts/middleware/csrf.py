@@ -6,15 +6,19 @@ against request forgeries from other sites.
 from __future__ import unicode_literals
 
 import logging
+import re
 
 from django.conf import settings
 from django.core.urlresolvers import get_callable
 from django.utils.cache import patch_vary_headers
+from django.utils.encoding import force_text
 
 REASON_NO_REFERER = "Referer checking failed - no Referer."
 REASON_BAD_REFERER = "Referer checking failed - %s does not match %s."
 REASON_NO_CSRF_COOKIE = "CSRF cookie not set."
 REASON_BAD_TOKEN = "CSRF token missing or incorrect."
+
+CSRF_KEY_LENGTH = 32
 
 def _get_failure_view():
     print 'asdasdasddas'
@@ -22,6 +26,16 @@ def _get_failure_view():
     Returns the view to be used for CSRF rejections
     """
     return get_callable(settings.CSRF_FAILURE_VIEW)
+
+def _sanitize_token(token):
+    # Allow only alphanum
+    if len(token) > CSRF_KEY_LENGTH:
+        return _get_new_csrf_key()
+    token = re.sub('[^a-zA-Z0-9]+', '', force_text(token))
+    if token == "":
+        # In case the cookie has been truncated to nothing at some point.
+        return _get_new_csrf_key()
+    return token
 
 class CsrfViewMiddleware(object):
     """
