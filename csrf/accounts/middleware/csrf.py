@@ -13,6 +13,7 @@ from django.core.urlresolvers import get_callable
 from django.utils.cache import patch_vary_headers
 from django.utils.encoding import force_text
 from django.utils.http import same_origin
+from django.utils.crypto import constant_time_compare
 
 logger = logging.getLogger('django.request')
 
