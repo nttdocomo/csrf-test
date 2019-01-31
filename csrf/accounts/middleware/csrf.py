@@ -66,6 +66,7 @@ class CsrfViewMiddleware(object):
 
         # Assume that anything not defined as 'safe' by RFC2616 needs protection
         if request.method not in ('GET', 'HEAD', 'OPTIONS', 'TRACE'):
+            print "request.method not in ('GET', 'HEAD', 'OPTIONS', 'TRACE')"
             if getattr(request, '_dont_enforce_csrf_checks', False):
                 # Mechanism to turn off CSRF checks for test suite.
                 # It comes after the creation of CSRF cookies, so that
@@ -75,6 +76,7 @@ class CsrfViewMiddleware(object):
                 return self._accept(request)
 
             if request.is_secure():
+                print "request.is_secure()"
                 # Suppose user visits http://example.com/
                 # An active network attacker (man-in-the-middle, MITM) sends a
                 # POST form that targets https://example.com/detonate-bomb/ and
