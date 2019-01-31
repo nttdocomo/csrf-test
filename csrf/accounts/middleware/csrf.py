@@ -105,7 +105,8 @@ class CsrfViewMiddleware(object):
                 # branches that call reject().
                 return self._accept(request)
             
-            print "request is_secure" + request.is_secure()
+            print "request is_secure"
+            print request.is_secure()
             if request.is_secure():
                 print "request.is_secure()"
                 # Suppose user visits http://example.com/
