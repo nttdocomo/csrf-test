@@ -5,13 +5,22 @@ against request forgeries from other sites.
 """
 from __future__ import unicode_literals
 
+import logging
+
 from django.conf import settings
+from django.core.urlresolvers import get_callable
 from django.utils.cache import patch_vary_headers
 
 REASON_NO_REFERER = "Referer checking failed - no Referer."
 REASON_BAD_REFERER = "Referer checking failed - %s does not match %s."
 REASON_NO_CSRF_COOKIE = "CSRF cookie not set."
 REASON_BAD_TOKEN = "CSRF token missing or incorrect."
+
+def _get_failure_view():
+    """
+    Returns the view to be used for CSRF rejections
+    """
+    return get_callable(settings.CSRF_FAILURE_VIEW)
 
 class CsrfViewMiddleware(object):
     """
@@ -31,6 +40,7 @@ class CsrfViewMiddleware(object):
         return None
 
     def _reject(self, request, reason):
+        print '_reject'
         logger.warning('Forbidden (%s): %s',
                        reason, request.path,
             extra={
