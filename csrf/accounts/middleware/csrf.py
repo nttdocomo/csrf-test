@@ -42,6 +42,9 @@ class CsrfViewMiddleware(object):
 
     def process_view(self, request, callback, callback_args, callback_kwargs):
         print 'process_view'
+        referer = request.META.get('HTTP_REFERER')
+        good_referer = 'https://%s/' % request.get_host()
+        print REASON_BAD_REFERER % (referer, good_referer)
         if getattr(request, 'csrf_processing_done', False):
             return None
 
