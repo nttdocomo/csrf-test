@@ -38,14 +38,10 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
 )
 
-class DisableCSRFMiddleware(object):
-    def process_request(self, request):
-        setattr(request, '_dont_enforce_csrf_checks', True)
-
 MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
-    DisableCSRFMiddleware,
+    'disable_csrf_middleware.middleware.DisableCSRFMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
